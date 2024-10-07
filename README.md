@@ -72,3 +72,55 @@ int main(){
     return 0;
 }
 ```
+
+## 10/07 Parity 
+**學習重點**  
+- 尋找陣列長度：sizeof(arr)/sizeof(arr[0])  
+- 2的31次方(32位元)：2147483648
+**解題思路**  
+step 1: 先設置一個涵蓋32個數值的數字陣列  
+step 2: 設置一個 while 迴圈將所有的程式碼包覆其中
+step 3: 設置 if 判斷，若整數為 0 ，則立即中止所有的運算
+step 4: 用 for 迴圈從 30 開始遞減計算(因為最大數值是 2147483647 ，僅涵31位元。)(然後記得要設定 #include <math.h> 的標頭檔，才能進行 pow 的計算)
+step 5: 判斷整數減去2的次方數是否>=0，有則設為1(並將sum值+1)，將整數值減去 2 的次方數；沒有的話則設為0，整數維持原樣(但如果 num_arr[0] 不為 1 則用 else if 跳過。)
+step 6: 用 for 迴圈輸出陣列中的數值
+
+**程式碼如下：**  
+```C++
+#include <stdio.h>
+#include <math.h>
+int main(){
+    int num_arr[31];
+    while(true){
+        num_arr[0]=0;
+        int n=0;
+        int integer;
+        scanf("%d",&integer);
+        int sum=0;
+        int calculation=integer;
+        if(integer == 0){
+            return 0;
+        }
+        for(int i=30;i>=0;i--){
+            if(calculation-pow(2,i)>=0){
+                calculation=calculation-pow(2,i);
+                num_arr[n]=1;
+                sum+=1;
+                n++;
+            }else if(num_arr[0]!=1){
+                continue;
+            }else{
+                num_arr[n]=0;
+                n++;
+            }
+        }
+        int size_len = sizeof(num_arr)/sizeof(num_arr[0]);
+        printf("The parity of ");
+        for(int j=0;j<n;j++){
+            printf("%d",num_arr[j]);
+        }
+        printf(" is %d (mod 2).\n",sum);
+    }
+
+}
+```
