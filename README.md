@@ -124,3 +124,50 @@ int main(){
 
 }
 ```
+
+## 10/09 Language Detection
+**學習重點**  
+- 字串相等使用方法:strcmp()
+**strcmp()**
+  這是一個在<string.h>底下的標準函式庫，若是兩字串相等則會返還一個 0 ，不相等則返回非零值。
+  使用方式：
+  ```C++
+  strcmp(word1, word2) == 0
+  ```
+  用逗號而不是==隔開，因為==是比較指針位置，而非字串內容，所以若是想要比較兩字串，得使用逗號隔開。
+  strcmp也是找相等字串的標準方式
+
+**解題程式碼**  
+```C++
+#include<stdio.h>
+#include <string.h>
+int main(){
+    char s[15];
+    int n=0;
+    while(true){
+        scanf("%s",s);
+        if(strcmp("#",s)==0){
+            return 0;
+        }
+        n++;
+        printf("Case %d: ",n);
+        if(strcmp(s, "HELLO") == 0){
+            printf("ENGLISH");
+        }else if(strcmp(s, "HOLA") == 0){
+            printf("SPANISH");
+        }else if(strcmp(s, "HALLO") == 0){
+            printf("GERMAN");
+        }else if(strcmp(s, "BONJOUR") == 0){
+            printf("FRENCH");
+        }else if(strcmp(s, "CIAO") == 0){
+            printf("ITALIAN");
+        }else if(strcmp(s,"ZDRAVSTVUJTE")==0){
+            printf("RUSSIAN");
+        }else{
+            printf("UNKNOWN");
+        }
+        printf("\n");
+    }
+
+}
+```
