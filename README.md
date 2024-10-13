@@ -212,3 +212,64 @@ while 迴圈持續下去，直到 H1 H2 M1 M2 同時都是 0 為止。
 **跨天的解法**  
 60 - 開始的分鐘數，並將開始小時+1。結束小時+24(因為跨到隔天)  
 之後再計算總分鐘數(結束小時 - 開始小時)*60+(結束分鐘 - 開始分鐘)  
+
+## 10/13 12019 - Doom's Day Algorithm
+### 解題思路
+1. 計算日期到1月1日距離多少天，因為1月1日是星期六，所以計算總天數時要先-1再+6。  
+2. 位於2月以後的日期需要加上經過幾個月的天數，例如：3月必須加上1月到2月的天數(即31+28)  
+3. 之後再單獨加上目前的天(day)
+4. 用陣列儲存日期的天數，有需要時再使用for迴圈加起來
+### 解題程式碼  
+```C++
+#include <stdio.h>
+
+int main(){
+    //2011年1月1日是禮拜六
+    int M;
+    int D;
+    int month_array[11]={31,28,31,30,31,30,31,31,30,31,30};//從1月到11月，因為12月基本上不會被計算到，所以不用記錄到12月
+    int Case;
+    int weekday;
+    scanf("%d",&Case);
+    int n=1;
+    while(n<=Case){
+        int count=0;
+        scanf("%d %d",&M,&D);
+        count+=(D+6-1);//距離1月1日多少天，且1月1日是禮拜六，所以要 +6
+        if(M>1){
+            for(int i=0;i<M-1;i++){
+                count+=month_array[i];
+            }
+        }
+        weekday = count%7;
+        switch(weekday){
+            case 1:
+                printf("Monday");
+                break;
+            case 2:
+                printf("Tuesday");
+                break;
+            case 3:
+                printf("Wednesday");
+                break;
+            case 4:
+                printf("Thursday");
+                break;
+            case 5:
+                printf("Friday");
+                break;
+            case 6:
+                printf("Saturday");
+                break;
+            case 0:
+                printf("Sunday");
+                break;
+        }
+        printf("\n");
+        n++;
+    }
+
+
+    return 0;
+}
+```
