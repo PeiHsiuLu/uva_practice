@@ -344,3 +344,39 @@ int main(){
 |-----------|-------------|
 |\n         |10           |
 |(結束)     |0           |
+
+**fgets**  
+fgets主要的作用是用來抓取完整的字串，每個字串中的字符都會被
+#### 解題思路
+- 因為是要尋找連續的單字，所以用if判斷句判斷二十六個字母大小寫的ASCll number 的值
+- 非二十六個字母的符號可以被視為空格，空格則終止字母連續
+- 用fgets抓取連續文字，每個文字都會被視為一個陣列中的值，抓到空格則停止連續
+#### 解題程式碼  
+```C++
+#include <stdio.h>
+#include <string.h>
+int main(){
+    char string[1001];
+    int count=0;
+    int judge=0;
+    while(fgets(string,sizeof(string),stdin)){
+        if(string[0]==10){
+            break;
+        }
+        for(int i=0;string[i]!=0;i++){
+            if(string[i]>=65&&string[i]<=90 || string[i]>=97&&string[i]<=122){
+                if(judge==0){//確保只在單字開頭時加1
+                    count++;
+                    judge=1;//標誌加入新單詞
+                }
+            }else{
+                //遇到非字母表示單詞結束
+                judge=0;
+            }
+        }
+        printf("%d\n",count);
+        count=0;
+        
+    }
+}
+```
