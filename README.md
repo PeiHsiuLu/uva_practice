@@ -401,3 +401,67 @@ int main(){
 
 ```C++
 sscanf(字串變數名,"%d",想儲存的整數)
+```
+### 解題思路
+1. 因為最大的整數是2的63次方，所以整數變數都必須使用 long long int 來儲存
+2. 因為最大的 2的63次方的位數是19，而空格是一格，所以可儲存的字串大小設定為40
+3. 用while迴圈重複抓取字串，抓到字串以後立刻轉換為整數
+4. 若是字串抓到的值的 ASCll number 是 10，則立刻中止編譯程式。  
+
+### 解題程式碼
+```C++
+#include <stdio.h>
+#include <stdlib.h>
+int main(){
+    long long int Hashmat;
+    long long int Enemy;
+    long long int substraction;
+    char input[40];
+    while(fgets(input,sizeof(input),stdin)){
+        if(input[0]==10){
+            return 0;
+        }
+        sscanf(input,"%lld %lld",&Hashmat,&Enemy);
+        substraction = abs(Hashmat-Enemy);
+        printf("%lld\n",substraction);
+    }
+}
+```
+## 10/15 11764 - Jumping Mario
+### 解題思路
+- high jump 與 low jump 都是用次數來計算，可以將每次的跳躍的牆的高度先儲存於整數陣列中，再一個個拿出來比較。  
+- 用 for 迴圈來儲存數值、遍歷數值，用 if 判斷前後兩個數值大小。加到 high jump 或是 low jump  
+### 解題程式碼
+```C++
+#include <stdio.h>
+int main(){
+    int Case;
+    scanf("%d",&Case);
+    int n=0;//計算目前的次數
+    int high_jump=0;
+    int low_jump=0;
+    int Case_current=1;
+    while(n<Case){
+        int Case_numbers;
+        int high_arr[50]={11};
+        scanf("%d",&Case_numbers);
+        for (int i=0;i<Case_numbers;i++){
+            scanf("%d",&high_arr[i]);
+        }
+        for (int j=0;j<Case_numbers;j++){
+            if(j>0){
+                if(high_arr[j-1]>high_arr[j]){
+                    low_jump++;
+                }else if(high_arr[j-1]<high_arr[j]){
+                    high_jump++;
+                }
+            }
+        }
+        printf("Case %d: %d %d\n",Case_current,high_jump,low_jump);
+        Case_current++;
+        high_jump=0;
+        low_jump=0;
+        n++;
+    }
+}
+```
