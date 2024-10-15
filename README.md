@@ -381,3 +381,7 @@ int main(){
     }
 }
 ```
+## 10/15 10055 - Hashmat the Brave Warrior
+### 學習重點
+- 儲存較大的資料型態
+- 
