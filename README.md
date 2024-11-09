@@ -592,7 +592,7 @@ int main(){
         return 0;
     }
    ```
-  - 字串轉成整數：
+- 字串轉成整數：
     ```C++
     #include <stdio.h>
     int main(){
