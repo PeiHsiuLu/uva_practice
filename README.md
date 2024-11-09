@@ -564,3 +564,72 @@ int main(){
 }
 }
 ```
+## 11/09 UVa 12650 - Dangerous Dive
+
+### 解題思路  
+- 先用陣列儲存所有生還的潛水人員的編號，再用for迴圈的條件判斷輸出剩餘死亡的潛水人員。一開始先把陣列所有的值全部設為0，再來把生還的潛水人員依編號設定值，而其他沒有被設定值的人員都視為死亡人員編號。
+- 用scanf("%d %d",N,R)==2來判斷while迴圈是否持續執行。
+
+### 學習重點  
+- 用空行判斷while迴圈是否停止執行，如果是 **整數** 可以使用while(scanf("%d",變數)==1)來判斷是否繼續執行。
+- 整數轉成字串：
+  ```C++
+    #include <stdio.h>
+
+    int main() {
+        char str[20];
+        int number;
+    
+        // 讀取整數
+        scanf("%d", &number);
+    
+        // 將整數轉換為字串
+        sprintf(str, "%d", number);
+    
+        // 輸出字串
+        printf("%s\n", str);
+    
+        return 0;
+    }
+   ```
+  - 字串轉成整數：
+    ```C++
+    #include <stdio.h>
+    int main(){
+            char str[20];
+            int number;
+            fgets(str,sizeof(str),number);
+            sscanf(str,"%d",&number);
+            return 0;
+    }
+    ```
+### 程式碼
+```C++
+#include <stdio.h>
+int main(){
+    char str_num[6];
+    int N;
+    int R;
+    int survive_id;
+    int judge=0;
+    while(scanf("%d %d",&N,&R)==2){
+        judge=N-R;
+        int divers[N]={0};
+        for(int i=0;i<R; i++){
+            scanf("%d",&survive_id);
+            divers[survive_id-1]=survive_id;
+        }
+        if(judge>0){
+            for(int i=0;i<N;i++){
+                if(divers[i]==0){
+                    divers[i]=i+1;
+                    printf("%d ",divers[i]);
+                }
+            }
+        }else{
+            printf("*");
+        }
+        printf("\n");
+    }
+}
+```
