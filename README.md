@@ -633,3 +633,45 @@ int main(){
     }
 }
 ```
+## 11/09 11942 - Lumberjack Sequencing
+### 程式碼
+```C++
+#include <stdio.h>
+
+int main(){
+    int N;
+    scanf("%d",&N);
+    int nums_arr[10];
+    int count=0;
+    int nums_arr_judge[9];
+    printf("Lumberjacks:\n");
+    while(count<N){
+        for(int i=0;i<10;i++){
+            scanf("%d",&nums_arr[i]);
+            if(i==0){
+                continue;
+            }else if(nums_arr[i]>nums_arr[i-1]){
+                nums_arr_judge[i-1]=1;
+            }else{
+                nums_arr_judge[i-1]=0;
+            }
+        }
+        for(int j=1;j<9;j++){
+            if(nums_arr_judge[j]!=nums_arr_judge[j-1]){
+                printf("Unordered\n");
+                break;
+            }else{
+                if(j==8){
+                    printf("Ordered\n");
+                }else{
+                    continue;
+                }
+            }
+        }
+        count++;
+    }
+}
+```
+### 解題思路
+- 找出升冪或是降冪的陣列，所以我們用0或1來表示與前面的數值比較的結果。較小的用另外一個陣列設定0，較大的設定為1。
+- 用for迴圈遍歷陣列，如果都是1那就是升冪陣列，如果是0就是降冪陣列，如果是參差不齊，那就是沒有排序。
