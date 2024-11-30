@@ -675,3 +675,112 @@ int main(){
 ### 解題思路
 - 找出升冪或是降冪的陣列，所以我們用0或1來表示與前面的數值比較的結果。較小的用另外一個陣列設定0，較大的設定為1。
 - 用for迴圈遍歷陣列，如果都是1那就是升冪陣列，如果是0就是降冪陣列，如果是參差不齊，那就是沒有排序。
+
+## 11/30 00948 - Fibonaccimal Base  
+### 解題思路
+- 先用費波那契函式找到在number之前的所有費波那契數，並將所有的數值儲存進一陣列中
+- 將費波那契數列的項次回傳回 main，用for迴圈判斷，如果有辦法使用費波那契數，則 print 1 ，否則 print 0
+
+### 學習重點
+
+#### 遞迴
+
+- 遞迴例子：費波那契數
+  - 費波那契數是以遞迴的方式來定義，第0項是0，第1項是1，第2項=第1項+第2項-1。
+  - 原則上，就是第n項=第(n-1)項+第(n-2)項，一路相加...
+  - 費波那契數列前幾項分別為：0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55...
+  - 費波那契數列可以用程式碼來實現，通常是使用遞迴函式：
+
+  ```cpp
+  #include <stdio.h>
+
+  int fib(const int n) {
+      if (n <= 1) {
+          return n;
+      }
+      return fib(n - 1) + fib(n - 2);
+  }
+  ```
+#### 遞迴例子：階乘 (n!)
+
+階乘的定義如下：  
+\( n! = n \times (n-1) \times (n-2) \times \ldots \times 1 \)  
+
+特殊情況：  
+\( 0! = 1 \)  
+
+階乘的實現可以用遞迴方式完成，範例如下：
+
+```cpp
+#include <stdio.h>
+
+int factorial(int n) {
+    if (n <= 1) {
+        return 1; // 當 n 為 0 或 1 時，直接回傳 1
+    }
+    return n * factorial(n - 1); // 遞迴呼叫
+}
+
+int main() {
+    int num = 5; // 測試用數字
+    printf("Factorial of %d is %d\n", num, factorial(num));
+    return 0;
+}
+```
+#### 遞迴的特性
+- 基底情況 (Base Case)：每個遞迴函式必須有一個基底情況來停止遞迴，否則會導致無限遞迴。  
+- 遞迴關係式 (Recursive Case)：每次遞迴呼叫會使用簡化版本的問題，最終應該接近基底情況。  
+- 呼叫堆疊 (Call Stack)：每次遞迴都會佔用呼叫堆疊的記憶體，當遞迴層數過多時，可能會導致堆疊溢位。  
+
+#### 遞迴的優缺點
+##### 優點
+- 簡化代碼，使邏輯更易於理解，特別是處理樹狀結構或數列問題。
+- 對一些數學問題（如費波那契數列、階乘）非常直觀。
+
+##### 缺點
+- 記憶體需求較高，因為需要維護呼叫堆疊。
+- 效率可能較低（例如費波那契的暴力遞迴計算有大量重複運算）。
+
+### 解題程式碼
+```cpp
+#include <stdio.h>
+int fib(const int number, int arr[]){
+    int a=0;
+    int b=1;
+    int n=0;
+    while(true){
+        int result=a+b;
+        if(result>number){
+            return n;
+        }
+        arr[n]=result;
+        a=b;
+        b=result;
+        n++;
+    }
+}
+
+int main(){
+    int n=0;
+    scanf("%d",&n);
+    int number=0;
+    int arr[500];
+    for(int i=1;i<=n;i++){
+        int arrr[500]={};
+        scanf("%d",&number);
+        int len=fib(number,arr);
+        int count=number;
+        printf("%d = ",number);
+        for(int i=len-1;i>=0;i--){
+            if(count-arr[i]>=0){
+                count=count-arr[i];
+                printf("1");
+            }else{
+                printf("0");
+            }
+        }
+        printf(" (fib)\n");
+    }
+}
+```
+  
